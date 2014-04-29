@@ -1,0 +1,29 @@
+<div class="container">
+
+  <div class="company row" ng-repeat="(id, company) in companies">
+    <div class="col-xs-1">
+
+    </div>
+    <div class="col-md-9 col-xs-11">
+
+      <div class="info">
+        <a href="{{ company.url }}">
+          {{ company.name }}
+          <span class="url">({{ company.url | hostnameFromUrl }})</span>
+        </a>
+      </div>
+
+      <div>
+        <span>submitted by <a href="#/users/{{ company.user_id }}">{{ company.owner }}</a></span>
+        —
+        <a ng-click="editCompany(company)" href="#">edit</a>
+        <a ng-click="deleteCompany(company)" href="#">delete</a>
+      </div>
+    </div>
+    <div class="col-md-2">
+
+    </div>
+
+  </div>
+
+</div> <!-- /container -->

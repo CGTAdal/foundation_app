@@ -1,0 +1,17 @@
+<form id="new_task" class="ng-pristine ng-valid" ng-submit="updateCompany()">
+	<div class="modal-header">
+	    <h3>Submit Company</h3>
+	</div>
+	<div class="modal-body">
+	  <div class="form-group">
+	    <input type="text" placeholder="Company Name" ng-model="company.name" maxlength="255" id="taskDescription" data-non-blank="" class="form-control input-lg ng-pristine ng-valid" autofocus="autofocus" required>
+	  </div>
+	  <div class="form-group">
+	    <input type="text" placeholder="URL" ng-model="company.url" maxlength="255" id="taskDescription" data-non-blank="" class="form-control input-lg ng-pristine ng-valid" autofocus="autofocus" required>
+	  </div>
+	</div>
+	<div class="modal-footer">
+	  <button type="submit" class="btn btn-primary">Submit</button>
+	  <button type="button" class="btn btn-warning" ng-click="cancel()">Cancel</button>
+	</div>
+</form>
