@@ -31,8 +31,6 @@ var dashbord = ngApp.controller('DashboardCtrl', function($scope, Company, $root
       }
 	  });
   };
-
-  // $(document).foundation();
 });
 
 // Please note that $modalInstance represents a modal window (instance) dependency.
