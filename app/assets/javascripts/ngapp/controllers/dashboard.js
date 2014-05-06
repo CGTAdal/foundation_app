@@ -7,6 +7,22 @@ var dashbord = ngApp.controller('DashboardCtrl', function($scope, Company, $root
   //     alert('asdfsdf');
   // });
 
+  $scope.updateTodo = function(value) {
+    console.log('Saving title ' + value);
+    alert('Saving title ' + value);
+  };
+  
+  $scope.cancelEdit = function(value) {
+    console.log('Canceled editing', value);
+    alert('Canceled editing of ' + value);
+  };
+  
+  $scope.todos = [
+    {id:123, title: 'Lord of the things'},
+    {id:321, title: 'Hoovering heights'},
+    {id:231, title: 'Watership brown'}
+  ];
+
   $rootScope.companies = Company.all();
   // console.log($rootScope.companies);
 

@@ -5,13 +5,14 @@ class Api::CompaniesController < Api::BaseController
 
   def index
     # render json: current_user.companies
-    respond_with current_user.companies
-    # respond_with Company.all
+    # respond_with current_user.companies
+    respond_with Company.all
   end
 
   def show
     # render json: company
-    respond_with company
+    # respond_with company
+    respond_with Company.all
   end
 
   def create

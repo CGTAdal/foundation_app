@@ -1,4 +1,4 @@
-<div class="container">
+<!-- <div class="container">
   
   <div class="company row" ng-repeat="(id, company) in companies">
     <div class="col-xs-1">
@@ -26,4 +26,54 @@
 
   </div>
 
-</div> <!-- /container -->
+</div> -->
+<div style="width:600px; paddding:15px;">
+  <!-- This is step 3
+  <div ng-controller="ParentCtrl" class="scope">
+    <input type="text" ng-model="model.title">
+    <button ng-click="$child.childTesting()">Greet</button>
+
+    <div ng-controller="ChildCtrl" class="scope">
+      <input type="text" ng-model="model.title">
+      <input type="text" ng-model="model.content">
+      <button ng-click="$parent.testing()">Set Model</button>
+      <button ng-click="greet()">Greet</button>
+    </div>
+  </div> -->
+
+  <!-- 
+  To check the ng repeat and fill data by ajax($http)
+  <div ng-controller="FriendsCtrl" class="scope">
+    <button ng-click="loadFriends()">Load Friends</button>
+    <ul>
+      <li ng-repeat="friend in friends">
+        {{friend.name}},{{friend.url}}
+      </li>
+    </ul>
+  </div> -->
+
+  <!-- EXAMPLE TO TEST THE INLINE EDIT AND DELET AND CANCEL FUNCTIONALITY -->
+  
+    <h1>Title</h1>
+    
+    <p>Click on a title or edit link to edit. Cancel edit and changes should 
+    revert to previous value. Press save to trigger some other handler.</p>
+   
+    <ul>
+      <li ng-repeat="todo in todos" inline-edit="todo.title" on-save="updateTodo(todo.title)" on-cancel="cancelEdit(todo.title)">
+        <div>
+        <input type="text" on-enter="save()" on-esc="cancel()" ng-model="model" ng-show="editMode">
+        <button ng-click="cancel()" ng-show="editMode">cancel</button>
+        <button ng-click="save()" ng-show="editMode">save</button>
+        <span ng-mouseenter="showEdit = true" ng-mouseleave="showEdit = false">
+          <span ng-hide="editMode" ng-click="edit()">{{todo.title}}</span>
+          <a ng-show="showEdit" ng-click="edit()">edit</a>
+        </span>
+        </div>
+      </li>
+    </ul>
+    
+    <div>{{todos}}</div>
+  
+
+</div>

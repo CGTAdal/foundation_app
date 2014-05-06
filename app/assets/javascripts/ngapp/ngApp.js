@@ -10,8 +10,6 @@ var ngApp = angular.module('ngApp', [
 ]);
 
 
-
-
 // making AngularJS work with CSRF protection
 ngApp.config(function($httpProvider) {
   var authToken = $("meta[name=\"csrf-token\"]").attr("content");
@@ -45,46 +43,6 @@ ngApp.run((function(_this) {
   };
 })(this));
 
-/*
-ngApp.directive('myCustomer', ['$document', function($document) {
-    return function(scope, element, attr) {
-      var startX = 0, startY = 0, x = 0, y = 0;
-
-      element.css({
-       position: 'relative',
-       border: '1px solid red',
-       backgroundColor: 'lightgrey',
-       cursor: 'pointer'
-      });
-      console.log(scope+'\n\n'+String.toString(element)+'\n\n'+attr);
-      
-      element.on('mousedown', function(event) {
-        // Prevent default dragging of selected content
-        // event.preventDefault();
-        // startX = event.pageX - x;
-        // startY = event.pageY - y;
-        // $document.on('mousemove', mousemove);
-        // $document.on('mouseup', mouseup);
-        
-      });
-
-      function mousemove(event) {
-        // y = event.pageY - startY;
-        // x = event.pageX - startX;
-        // element.css({
-        //   top: y + 'px',
-        //   left:  x + 'px'
-        // });
-        
-      }
-
-      function mouseup() {
-        // $document.off('mousemove', mousemove);
-        // $document.off('mouseup', mouseup);
-      }
-    };
-  }]);
-*/
 
  ngApp.directive('aLeftpanel', function($document,$window) {
   return {
@@ -95,7 +53,7 @@ ngApp.directive('myCustomer', ['$document', function($document) {
       targetId = attrs.aLeftpanel;
       jQuery(targetId).hide(0);
       //console.log(jQuery(document).height();)
-      console.log(jQuery($document).height()+'\n'+jQuery($window).height());
+      // console.log(jQuery($document).height()+'\n'+jQuery($window).height());
 
       jQuery(targetId).find('.a-fade').click(function(){
         applyCustomEffect();
@@ -173,4 +131,120 @@ ngApp.directive('slideable', function () {
             });
         }
     }
+});
+
+
+ngApp.controller('ParentCtrl', function ($scope) {
+  // $scope.title = 'Title set by parent';
+  $scope.model = {title: 'Title set by parent'};
+  $scope.greet = function(){
+    alert('I m in the parent');
+  }
+  $scope.testing = function(){
+    alert('I m in the parent testing');
+  }
+});
+
+ngApp.controller('ChildCtrl', function ($scope) {
+  // $scope.content = 'Title set by child';
+  $scope.model = {title: 'Title set by child',content: 'Content set by child'};
+  $scope.setModel = function(){
+    $scope.model = {title: 'Title set by child setModel'};
+  }
+  $scope.greet = function(){
+    alert('I m in the child');
+  }
+  $scope.childTesting = function(){
+    alert('I m in the parent childTesting');
+  }
+  $scope.testing = function(){
+    alert('I m in the child');
+  }
+});
+
+ngApp.controller('FriendsCtrl', function ($scope,$http) {
+  $scope.loadFriends = function(){
+    $http.get('api/companies/4')
+    .success(function(data){
+      console.log(data);
+      $scope.friends = data;
+    })
+    .error(function(){
+      alert('Error')
+    })
+  }
+});
+
+// INLINE EDIT AND SAVE
+// ngApp.controller('MaintestCtrl', function($scope) {
+
+//   $scope.updateTodo = function(value) {
+//     console.log('Saving title ' + value);
+//     alert('Saving title ' + value);
+//   };
+  
+//   $scope.cancelEdit = function(value) {
+//     console.log('Canceled editing', value);
+//     alert('Canceled editing of ' + value);
+//   };
+  
+//   $scope.todos = [
+//     {id:123, title: 'Lord of the things'},
+//     {id:321, title: 'Hoovering heights'},
+//     {id:231, title: 'Watership brown'}
+//   ];
+// });
+
+// On esc event
+ngApp.directive('onEsc', function() {
+  return function(scope, elm, attr) {
+    elm.bind('keydown', function(e) {
+      if (e.keyCode === 27) {
+        scope.$apply(attr.onEsc);
+      }
+    });
+  };
+});
+
+// On enter event
+ngApp.directive('onEnter', function() {
+  return function(scope, elm, attr) {
+    elm.bind('keypress', function(e) {
+      if (e.keyCode === 13) {
+        scope.$apply(attr.onEnter);
+      }
+    });
+  };
+});
+
+// Inline edit directive
+ngApp.directive('inlineEdit', function($timeout) {
+  return {
+    scope: {
+      model: '=inlineEdit',
+      handleSave: '&onSave',
+      handleCancel: '&onCancel'
+    },
+    link: function(scope, elm, attr) {
+      var previousValue;
+      
+      scope.edit = function() {
+        scope.editMode = true;
+        previousValue = scope.model;
+        
+        $timeout(function() {
+          elm.find('input')[0].focus();
+        }, 0, false);
+      };
+      scope.save = function() {
+        scope.editMode = false;
+        scope.handleSave({value: scope.model});
+      };
+      scope.cancel = function() {
+        scope.editMode = false;
+        scope.model = previousValue;
+        scope.handleCancel({value: scope.model});
+      };
+    }
+  };
 });
